@@ -13,19 +13,20 @@ const verifyToken = process.env.VERIFY_TOKEN;
 
 // Route for GET requests
 app.get('/webhook', (req, res) => {
-  const verifyToken = process.env.WEBHOOK_VERIFY_TOKEN;
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];
-
-  if (mode === 'subscribe' && token === verifyToken) {
-    console.log('Webhook verified successfully');
-    return res.status(200).send(challenge);
+  
+  // Check if mode and token match
+  if (mode === 'subscribe' && token === 'whatsapp_webhook_verify_token_a1b2c3d4e5f6g7h8') {
+    console.log('Webhook verified');
+    res.status(200).send(challenge);  // Return the challenge
   } else {
-    console.log('Webhook verification failed', { mode, token });
-    return res.sendStatus(403);
+    console.log('Verification failed');
+    res.status(403).send('Verification failed');
   }
 });
+
 
 // Route for POST requests
 app.post('/', (req, res) => {
