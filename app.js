@@ -12,14 +12,18 @@ const port = process.env.PORT || 3000;
 const verifyToken = process.env.VERIFY_TOKEN;
 
 // Route for GET requests
-app.get('/', (req, res) => {
-  const { 'hub.mode': mode, 'hub.challenge': challenge, 'hub.verify_token': token } = req.query;
+app.get('/webhook', (req, res) => {
+  const verifyToken = process.env.WEBHOOK_VERIFY_TOKEN;
+  const mode = req.query['hub.mode'];
+  const token = req.query['hub.verify_token'];
+  const challenge = req.query['hub.challenge'];
 
   if (mode === 'subscribe' && token === verifyToken) {
-    console.log('WEBHOOK VERIFIED');
-    res.status(200).send(challenge);
+    console.log('Webhook verified successfully');
+    return res.status(200).send(challenge);
   } else {
-    res.status(403).end();
+    console.log('Webhook verification failed', { mode, token });
+    return res.sendStatus(403);
   }
 });
 
