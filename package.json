@@ -1,0 +1,15 @@
+{
+  "name": "adashina-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "WhatsApp chatbot for Adashi management using Groq Llama 3",
+  "main": "app.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}
